@@ -155,7 +155,11 @@ export class CoreStack extends Stack {
                 name: 'Workshop',
                 cidrRange: properties.vpcCidr || '10.0.0.0/16',
                 logRetentionDays: properties.defaultRetentionDays || RetentionDays.ONE_WEEK,
-                enableDnsQueryResolverLogs: true,
+                // Disabled for accounts with an org-managed Route 53 Resolver query-log
+                // config that auto-associates every VPC: a VPC allows only one resolver
+                // query-log association, so the stack's own association is rejected and
+                // the Core stack rolls back. The org config already logs the VPC's DNS queries.
+                enableDnsQueryResolverLogs: false,
                 enableFlowLogs: true,
             });
             this.vpc = vpc.vpc;
