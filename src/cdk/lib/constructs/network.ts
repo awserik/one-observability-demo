@@ -352,14 +352,13 @@ export class WorkshopNetwork extends Construct {
             exportName: VPC_FLOWLOGS_LOGGROUP_NAME,
             description: 'VPC Flow logs Log Group name',
         });
-        new CfnOutput(this, 'R53QueryResolverLogGroupName', {
-            value:
-                this.dnsQueryResolverLogs && this.dnsQueryResolverLogs.destinationArn
-                    ? this.dnsQueryResolverLogs.destinationArn
-                    : '',
-            exportName: R53_QUERY_RESOLVER_LOGGROUP_NAME,
-            description: 'R53 Query Resolver Group name',
-        });
+        if (this.dnsQueryResolverLogs && this.dnsQueryResolverLogs.destinationArn) {
+            new CfnOutput(this, 'R53QueryResolverLogGroupName', {
+                value: this.dnsQueryResolverLogs.destinationArn,
+                exportName: R53_QUERY_RESOLVER_LOGGROUP_NAME,
+                description: 'R53 Query Resolver Group name',
+            });
+        }
     }
 
     /**
