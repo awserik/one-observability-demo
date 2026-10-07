@@ -694,6 +694,7 @@ Resources:
     Type: AWS::CodeBuild::Project
     Properties:
       Name: !Sub ${AWS::StackName}-cdk-deployment
+      TimeoutInMinutes: 180
       Artifacts:
         Type: NO_ARTIFACTS
       Environment:
